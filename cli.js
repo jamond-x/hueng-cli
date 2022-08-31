@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-// Node CLI 应用入口文件必须要有这样的文件头
-// 如果是 Linux 或者 macOS 系统下还需要修改此文件的读写权限为 755？
-// 通过 chmod 755 cli.js 实现修改
-
 const fs = require('fs');
 const inquirer = require('inquirer');
 const path = require('path');
 const ejs = require('ejs');
+const ora = require('ora');
+const chalk = require('chalk');
+
+const spinner = ora();
 
 /**
  * 复制模板文件
@@ -47,42 +47,71 @@ const copyFile = (sourceDir, files, context, newPath) => {
   });
 };
 
-inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'name',
-      message: '项目名称：',
-    },
-  ])
-  .then((ans) => {
-    //创建以项目name命名的文件夹前判断文件夹是否已存在
-    fs.exists(path.join(process.cwd(), ans?.name), (exist) => {
-      if (exist) {
-        console.log('文件名已存在，请更换项目名称！');
-        process.exit();
-      }
-    });
+const Questions = [
+  {
+    type: 'list',
+    name: 'stack',
+    message: '技术栈：',
+    choices: ['React+TS', 'Vue3+TS'],
+  },
+  {
+    type: 'input',
+    name: 'name',
+    message: '项目名称：',
+    default: 'hueng-cli-app',
+  },
+  {
+    type: 'input',
+    name: 'description',
+    message: '项目描述：',
+    default: 'an app create by hueng-cli',
+  },
+  {
+    type: 'input',
+    name: 'owner',
+    message: 'owner：',
+  },
+  {
+    type: 'input',
+    name: 'github',
+    message: 'github仓库地址：',
+  },
+];
 
-    // 先创建项目文件夹
-    fs.mkdir(path.join(process.cwd(), ans?.name), (err) => {
+inquirer.prompt(Questions).then((ans) => {
+  //创建以项目name命名的文件夹前判断文件夹是否已存在
+  fs.exists(path.join(process.cwd(), ans?.name), (exist) => {
+    if (exist) {
+      console.log('文件名已存在，请更换项目名称！');
+      process.exit();
+    }
+  });
+
+  // 先创建项目文件夹
+  fs.mkdir(path.join(process.cwd(), ans?.name), (err) => {
+    if (err) throw err;
+    try {
+      // 切换当前进程目录
+      process.chdir(path.join(process.cwd(), ans?.name));
+    } catch {
+      console.log(chalk.red('❌切换目录失败！'));
+    }
+  });
+
+  // 需要创建目录且切换目录后才进行相关操作，所以nexttick()
+  process.nextTick(() => {
+    spinner.start('创建项目模块中...');
+    const tmplDir = path.join(__dirname, 'templates');
+    // 读取模板文件夹
+    fs.readdir(tmplDir, (err, files) => {
       if (err) throw err;
-      console.log('已创建项目根目录');
-      try {
-        // 切换当前进程目录
-        process.chdir(path.join(process.cwd(), ans?.name));
-      } catch {
-        console.log('切换目录失败！');
-      }
-    });
-
-    // 需要创建目录且切换目录后才进行相关操作，所以nexttick()
-    process.nextTick(() => {
-      const tmplDir = path.join(__dirname, 'templates');
-      // 读取模板文件夹
-      fs.readdir(tmplDir, (err, files) => {
-        if (err) throw err;
-        copyFile(tmplDir, files, ans, process.cwd());
-      });
+      copyFile(tmplDir, files, ans, process.cwd());
+      spinner.succeed('创建成功！');
+      console.log('');
+      console.log(chalk.bgYellowBright('Enjoy!😎'));
     });
   });
+});
+
+// Linux 或者 macOS 系统下还需要修改此文件的读写权限为 755
+// chmod 755 cli.js 实现修改
