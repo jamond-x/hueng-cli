@@ -1,5 +1,7 @@
 ## hueng-cli
 
+集成了常用的项目模块
+
 ### 支持模板(逐渐完善中~)
 - React Starter Kit  (Jamstack + React + React Router + Material UI + Firebase Auth + TypeScript + ESLint + Prettier + Jest +   GitHub Actions)
 - react-pipeline  (React 18 + TS + AntD + GitHub Pages + Tailwind + Sass + React Router DOM + ESLint)'
