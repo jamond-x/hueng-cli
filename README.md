@@ -3,7 +3,7 @@
 集成了常用的项目模块
 
 ### 支持模板(逐渐完善中~)
-- React Starter Kit  (Jamstack + React + React Router + Material UI + Firebase Auth + TypeScript + ESLint + Prettier + Jest +   GitHub Actions)
+- React Starter Kit  (React + React Router + TypeScript + Material UI + Jamstack + Firebase Auth + ESLint + Prettier + Jest + GitHub Actions)
 - react-pipeline  (React 18 + TS + AntD + GitHub Pages + Tailwind + Sass + React Router DOM + ESLint)'
 - vite-mern-template  (React 18 + TypeScript + Vite + Redux Toolkit + ESLint + React Router DOM + Axios + React Icons + React Toastify + Express + Mongoose)
 - template-vite-minimal (Vite + React + TypeScript + ESLint + Prettier)

@@ -12,25 +12,23 @@ const spinner = ora();
 const download = require('download-git-repo');
 
 const Templates = {
-  'React Starter Kit  (Jamstack + React + React Router + Material UI + Firebase Auth + TypeScript + ESLint + Prettier + Jest + GitHub Actions)':
+  'React + React Router + TypeScript + Material UI + Jamstack + Firebase Auth + ESLint + Prettier + Jest + GitHub Actions':
     'kriasoft/react-starter-kit',
-  'react-pipeline  (React 18 + TS + AntD + GitHub Pages + Tailwind + Sass + React Router DOM + ESLint)':
+  'React 18 + TS + AntD + GitHub Pages + Tailwind + Sass + React Router DOM + ESLint':
     'maifeeulasad/react-pipeline',
-  'vite-mern-template  (React 18 + TypeScript + Vite + Redux Toolkit + ESLint + React Router DOM + Axios + React Icons + React Toastify + Express + Mongoose)':
+  'React 18 + TypeScript + Vite + Redux Toolkit + ESLint + React Router DOM + Axios + React Icons + React Toastify + Express + Mongoose':
     'apicgg/vite-mern-template',
-  'template-vite-minimal (Vite + React + TypeScript + ESLint + Prettier)':
-    '0x219/template-vite-react',
-  'vite-quasar-starter  (Vite 2.x + Vue 3.x + quasar 2.x starter)':
-    'fyeeme/vite-quasar',
-  'vue3-pc-template  (Vite + ElementPlus + Vue3 + TS + Vue-Router4 + Vuex4 + Vue-use + Vue-i18n PC Template)':
+  'React + Vite + TypeScript + ESLint + Prettier': '0x219/template-vite-react',
+  ' Vue 3.x + Vite 2.x + quasar 2.x starter': 'fyeeme/vite-quasar',
+  'Vue3 + TS + Vite + ElementPlus + Vue-Router4 + Vuex4 + Vue-use + Vue-i18n PC Template':
     'parajs/vue3-pc-template',
-  'vue3-template  (Vue 3 + Tailwind CSS + vue-router + PNPM + ESlint Airbnb + Stylelint + GitHub pages actions + Netlify)':
+  'Vue 3 + Tailwind CSS + vue-router + PNPM + ESlint Airbnb + Stylelint + GitHub pages actions + Netlify':
     'lecoueyl/vue3-template',
-  'naive-ui-dashboard-template  (UI friendly, Vue 3 + TSX + TailwindCSS 2 JIT + PostCSS + Naive UI)':
+  'Vue 3 + TSX + TailwindCSS 2 JIT + PostCSS + Naive UI':
     'Innei/naive-ui-dashboard-template',
-  'vue-vben-admin  (Background management template based on Vue3 + Ant-Design-Vue + TypeScript)':
+  'Background management template based on Vue3 + Ant-Design-Vue + TypeScript':
     'vbenjs/vue-vben-admin',
-  'vue-pure-admin  (Background management template based on Vue3 + TypeScript + Tailwind CSS + element-plus)':
+  'Background management template based on Vue3 + TypeScript + Tailwind CSS + element-plus':
     'xiaoxian521/vue-pure-admin',
 };
 
