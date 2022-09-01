@@ -9,6 +9,56 @@ const ora = require('ora');
 const chalk = require('chalk');
 const spinner = ora();
 
+const download = require('download-git-repo');
+
+const Templates = {
+  'React Starter Kit  (Jamstack + React + React Router + Material UI + Firebase Auth + TypeScript + ESLint + Prettier + Jest + GitHub Actions)':
+    'kriasoft/react-starter-kit',
+  'react-pipeline  (React 18 + TS + AntD + GitHub Pages + Tailwind + Sass + React Router DOM + ESLint)':
+    'maifeeulasad/react-pipeline',
+  'vite-mern-template  (React 18 + TypeScript + Vite + Redux Toolkit + ESLint + React Router DOM + Axios + React Icons + React Toastify + Express + Mongoose)':
+    'apicgg/vite-mern-template',
+  'template-vite-minimal (Vite + React + TypeScript + ESLint + Prettier)':
+    '0x219/template-vite-react',
+  'vite-quasar-starter  (Vite 2.x + Vue 3.x + quasar 2.x starter)':
+    'fyeeme/vite-quasar',
+  'vue3-pc-template  (Vite + ElementPlus + Vue3 + TS + Vue-Router4 + Vuex4 + Vue-use + Vue-i18n PC Template)':
+    'parajs/vue3-pc-template',
+  'vue3-template  (Vue 3 + Tailwind CSS + vue-router + PNPM + ESlint Airbnb + Stylelint + GitHub pages actions + Netlify)':
+    'lecoueyl/vue3-template',
+  'naive-ui-dashboard-template  (UI friendly, Vue 3 + TSX + TailwindCSS 2 JIT + PostCSS + Naive UI)':
+    'Innei/naive-ui-dashboard-template',
+  'vue-vben-admin  (Background management template based on Vue3 + Ant-Design-Vue + TypeScript)':
+    'vbenjs/vue-vben-admin',
+  'vue-pure-admin  (Background management template based on Vue3 + TypeScript + Tailwind CSS + element-plus)':
+    'xiaoxian521/vue-pure-admin',
+};
+
+const Questions = [
+  {
+    type: 'list',
+    name: 'stack',
+    message: '技术栈：',
+    choices: Object.keys(Templates),
+  },
+  {
+    type: 'input',
+    name: 'description',
+    message: '项目描述：',
+    default: 'an app create by hueng-cli',
+  },
+  {
+    type: 'input',
+    name: 'owner',
+    message: 'owner：',
+  },
+  {
+    type: 'input',
+    name: 'github',
+    message: 'github仓库地址：',
+  },
+];
+
 /**
  * 复制模板文件
  * @param {string} sourceDir 源模板路径
@@ -47,31 +97,6 @@ const copyFile = (sourceDir, files, context, newPath) => {
   });
 };
 
-const Questions = [
-  {
-    type: 'list',
-    name: 'stack',
-    message: '技术栈：',
-    choices: ['React+TS', 'Vue3+TS'],
-  },
-  {
-    type: 'input',
-    name: 'description',
-    message: '项目描述：',
-    default: 'an app create by hueng-cli',
-  },
-  {
-    type: 'input',
-    name: 'owner',
-    message: 'owner：',
-  },
-  {
-    type: 'input',
-    name: 'github',
-    message: 'github仓库地址：',
-  },
-];
-
 const context = {};
 
 program.command('create').description('创建新项目');
@@ -104,10 +129,21 @@ inquirer.prompt(Questions).then((ans) => {
     // 读取模板文件夹
     fs.readdir(tmplDir, (err, files) => {
       if (err) throw err;
-      copyFile(tmplDir, files, { ...context, ...ans }, process.cwd());
-      spinner.succeed('创建成功！');
-      console.log('');
-      console.log(chalk.bgYellowBright('Enjoy!😎'));
+      // copyFile(tmplDir, files, { ...context, ...ans }, process.cwd());
+      // spinner.succeed('创建成功！');
+      // console.log('');
+      // console.log(chalk.bgYellowBright('Enjoy!😎'));
+      download(Templates[ans.stack], process.cwd(), (err) => {
+        if (err) {
+          console.log(err);
+          spinner.fail('创建失败！');
+          return;
+        }
+        spinner.succeed('创建成功！');
+        console.log('');
+        console.log(chalk.bgYellowBright('Enjoy!😎'));
+        console.log('');
+      });
     });
   });
 });
