@@ -19,7 +19,7 @@ const Templates = {
   'React 18 + TypeScript + Vite + Redux Toolkit + ESLint + React Router DOM + Axios + React Icons + React Toastify + Express + Mongoose':
     'apicgg/vite-mern-template',
   'React + Vite + TypeScript + ESLint + Prettier': '0x219/template-vite-react',
-  ' Vue 3.x + Vite 2.x + quasar 2.x starter': 'fyeeme/vite-quasar',
+  'Vue 3.x + Vite 2.x + quasar 2.x starter': 'fyeeme/vite-quasar',
   'Vue3 + TS + Vite + ElementPlus + Vue-Router4 + Vuex4 + Vue-use + Vue-i18n PC Template':
     'parajs/vue3-pc-template',
   'Vue 3 + Tailwind CSS + vue-router + PNPM + ESlint Airbnb + Stylelint + GitHub pages actions + Netlify':
