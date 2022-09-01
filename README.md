@@ -13,7 +13,7 @@ npm i hueng-cli -g
 
 ### 使用
 ```bash
-hueng-cli
+hueng-cli create <项目名称>
 ```
 
 根据提示选择或输入相关项目初始化信息

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const { program } = require('commander');
 const inquirer = require('inquirer');
 const path = require('path');
 const ejs = require('ejs');
 const ora = require('ora');
 const chalk = require('chalk');
-
 const spinner = ora();
 
 /**
@@ -56,12 +56,6 @@ const Questions = [
   },
   {
     type: 'input',
-    name: 'name',
-    message: '项目名称：',
-    default: 'hueng-cli-app',
-  },
-  {
-    type: 'input',
     name: 'description',
     message: '项目描述：',
     default: 'an app create by hueng-cli',
@@ -78,9 +72,14 @@ const Questions = [
   },
 ];
 
+const context = {};
+
+program.command('create').description('创建新项目');
+context.name = program.parse(process.argv).args[1] ?? 'hueng-cli-app';
+
 inquirer.prompt(Questions).then((ans) => {
   //创建以项目name命名的文件夹前判断文件夹是否已存在
-  fs.exists(path.join(process.cwd(), ans?.name), (exist) => {
+  fs.exists(path.join(process.cwd(), context.name), (exist) => {
     if (exist) {
       console.log('文件名已存在，请更换项目名称！');
       process.exit();
@@ -88,11 +87,11 @@ inquirer.prompt(Questions).then((ans) => {
   });
 
   // 先创建项目文件夹
-  fs.mkdir(path.join(process.cwd(), ans?.name), (err) => {
+  fs.mkdir(path.join(process.cwd(), context.name), (err) => {
     if (err) throw err;
     try {
       // 切换当前进程目录
-      process.chdir(path.join(process.cwd(), ans?.name));
+      process.chdir(path.join(process.cwd(), context.name));
     } catch {
       console.log(chalk.red('❌切换目录失败！'));
     }
@@ -105,7 +104,7 @@ inquirer.prompt(Questions).then((ans) => {
     // 读取模板文件夹
     fs.readdir(tmplDir, (err, files) => {
       if (err) throw err;
-      copyFile(tmplDir, files, ans, process.cwd());
+      copyFile(tmplDir, files, { ...context, ...ans }, process.cwd());
       spinner.succeed('创建成功！');
       console.log('');
       console.log(chalk.bgYellowBright('Enjoy!😎'));
